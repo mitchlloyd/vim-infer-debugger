@@ -14,7 +14,7 @@ endif
 function! AddDebugger(direction)
   let debugger_array = FindDebuggerArray()
 
-  if debugger_array != ""
+  if debugger_array != []
     execute "normal!" a:direction debugger_array[1]
   else
     echo NoDebuggerFoundError()
@@ -27,7 +27,7 @@ nmap <Leader>p :call AddDebugger("o")<cr>
 function! RemoveAllDebuggers()
   let debugger_array = FindDebuggerArray()
 
-  if debugger_array != ""
+  if debugger_array != []
     let command = join(["g/", debugger_array[1], "/d"], "")
     execute command
   else
@@ -45,6 +45,8 @@ function! FindDebuggerArray()
       return array
     endif
   endfor
+
+  return []
 endfunction
 
 function! NoDebuggerFoundError()
